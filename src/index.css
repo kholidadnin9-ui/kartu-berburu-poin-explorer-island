@@ -1,0 +1,1087 @@
+@import "tailwindcss";
+
+/* font dibundel agar game tetap tampil benar tanpa internet */
+@font-face {
+  font-family: "Luckiest Guy";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../node_modules/@fontsource/luckiest-guy/files/luckiest-guy-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Baloo 2";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("../node_modules/@fontsource-variable/baloo-2/files/baloo-2-latin-wght-normal.woff2") format("woff2");
+}
+
+@theme {
+  --font-display: "Luckiest Guy", "Baloo 2", cursive;
+  --font-body: "Baloo 2", ui-rounded, system-ui, sans-serif;
+
+  --color-ink: #2b1b0e;
+  --color-wood: #a9673a;
+  --color-wood-dark: #6e3f1e;
+  --color-parch: #fdf0d5;
+  --color-lagoon: #2fa7e8;
+  --color-lagoon-deep: #1173b8;
+  --color-sky-pop: #8ed8ff;
+  --color-sun: #ffd54f;
+  --color-tang: #ff8a3d;
+  --color-leaf: #37c871;
+  --color-berry: #ff4f91;
+  --color-grape: #7c3aed;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: linear-gradient(#8ed8ff 0%, #c9efff 45%, #eafaff 100%);
+  color: #2b1b0e;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ---------- sticker / cartoon lettering ---------- */
+.ol {
+  text-shadow:
+    3px 0 0 #2b1b0e, -3px 0 0 #2b1b0e, 0 3px 0 #2b1b0e, 0 -3px 0 #2b1b0e,
+    2px 2px 0 #2b1b0e, -2px 2px 0 #2b1b0e, 2px -2px 0 #2b1b0e, -2px -2px 0 #2b1b0e,
+    0 6px 0 rgba(43, 27, 14, 0.35);
+}
+.ol-sm {
+  text-shadow:
+    2px 0 0 #2b1b0e, -2px 0 0 #2b1b0e, 0 2px 0 #2b1b0e, 0 -2px 0 #2b1b0e,
+    1.5px 1.5px 0 #2b1b0e, -1.5px 1.5px 0 #2b1b0e, 1.5px -1.5px 0 #2b1b0e,
+    -1.5px -1.5px 0 #2b1b0e;
+}
+.stroke-fill {
+  position: relative;
+  display: block;
+  isolation: isolate;
+  color: transparent;
+  background-image: linear-gradient(#fff6d0 6%, #ffd54f 45%, #ff9f1c 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.stroke-under {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  color: transparent;
+  -webkit-text-stroke: 10px #2b1b0e;
+  pointer-events: none;
+}
+
+/* ---------- materials ---------- */
+.wood {
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      rgba(60, 30, 10, 0.14) 0 2px,
+      rgba(255, 255, 255, 0.05) 2px 5px,
+      transparent 5px 14px
+    ),
+    linear-gradient(#c07d43, #8a4b21);
+  border: 4px solid #4a2a12;
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -6px 0 rgba(60, 30, 10, 0.35),
+    0 4px 0 rgba(43, 27, 14, 0.35);
+}
+.parch {
+  background-image: linear-gradient(#fffaee, #fbe6bd);
+  border: 4px solid #4a2a12;
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.9),
+    0 4px 0 rgba(43, 27, 14, 0.3);
+}
+.glass-blue {
+  background-image: linear-gradient(#4fc3f7, #1173b8);
+  border: 4px solid #2b1b0e;
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.5),
+    0 4px 0 rgba(43, 27, 14, 0.35);
+}
+
+/* ---------- chunky 3d buttons ---------- */
+.btn3d {
+  border: 3px solid #2b1b0e;
+  border-radius: 12px;
+  box-shadow: 0 5px 0 #2b1b0e;
+  transition:
+    transform 0.08s ease,
+    box-shadow 0.08s ease,
+    filter 0.15s ease;
+  cursor: pointer;
+  user-select: none;
+}
+.btn3d:hover {
+  filter: brightness(1.07);
+}
+.btn3d:active {
+  transform: translateY(5px);
+  box-shadow: 0 0 0 #2b1b0e;
+}
+.btn3d:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+/* ---------- pixel sky backdrop ---------- */
+.pixgrid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.35) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.35) 1px, transparent 1px);
+  background-size: 8px 8px;
+  opacity: 0.35;
+  mix-blend-mode: soft-light;
+}
+
+/* ---------- motion ---------- */
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-9px) rotate(1.5deg);
+  }
+}
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+@keyframes spincoin {
+  0% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(0.18);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+@keyframes popin {
+  0% {
+    transform: scale(0.72) translateY(10px);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.04);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes shine {
+  0% {
+    background-position: -180% 0;
+  }
+  100% {
+    background-position: 280% 0;
+  }
+}
+@keyframes pulseglow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0 rgba(255, 213, 79, 0));
+  }
+  50% {
+    filter: drop-shadow(0 0 14px rgba(255, 213, 79, 0.95));
+  }
+}
+@keyframes rise {
+  0% {
+    transform: translateY(6px) scale(0.9);
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-34px) scale(1.05);
+    opacity: 0;
+  }
+}
+@keyframes scanline {
+  0% {
+    top: 4%;
+  }
+  50% {
+    top: 92%;
+  }
+  100% {
+    top: 4%;
+  }
+}
+
+.anim-float {
+  animation: floaty 3.4s ease-in-out infinite;
+}
+.anim-bob {
+  animation: bob 1.1s ease-in-out infinite;
+}
+.anim-coin {
+  animation: spincoin 1.6s ease-in-out infinite;
+}
+.anim-pop {
+  animation: popin 0.35s cubic-bezier(0.2, 1.4, 0.5, 1) both;
+}
+.anim-glow {
+  animation: pulseglow 2s ease-in-out infinite;
+}
+.anim-rise {
+  animation: rise 1.1s ease-out forwards;
+}
+.anim-scan {
+  animation: scanline 2.6s ease-in-out infinite;
+}
+.shine {
+  background-image: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.75) 50%,
+    transparent 65%
+  );
+  background-size: 200% 100%;
+  animation: shine 2.6s linear infinite;
+}
+
+/* ---------- scrollbar ---------- */
+::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+::-webkit-scrollbar-track {
+  background: #dff3ff;
+}
+::-webkit-scrollbar-thumb {
+  background: #7c3aed;
+  border: 3px solid #dff3ff;
+  border-radius: 999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ================= GAME UTUH & LAYAR ADAPTIF ================= */
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+}
+.game-frame > .inset-0,
+.game-frame > img.inset-0,
+.game-frame > div.inset-0,
+.teleport-shade,
+.teleport-flash {
+  inset: calc(-1 * var(--bleed-y, 0px)) calc(-1 * var(--bleed-x, 0px)) !important;
+  width: calc(100% + 2 * var(--bleed-x, 0px)) !important;
+  height: calc(100% + 2 * var(--bleed-y, 0px)) !important;
+  max-width: none !important;
+}
+.is-portrait .play-touch-controls {
+  display: none;
+}
+.teleport-scenery {
+  left: calc(-1 * var(--bleed-x, 0px)) !important;
+  top: calc(-1 * var(--bleed-y, 0px)) !important;
+  width: calc(640px + 2 * var(--bleed-x, 0px)) !important;
+  height: calc(100% + 2 * var(--bleed-y, 0px)) !important;
+}
+.teleport-ground {
+  left: calc(-1 * var(--bleed-x, 0px)) !important;
+  right: calc(-1 * var(--bleed-x, 0px)) !important;
+  bottom: calc(-1 * var(--bleed-y, 0px)) !important;
+}
+body {
+  overflow: hidden;
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* konfeti */
+@keyframes confetti {
+  0% {
+    transform: translateY(-14px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(340px) rotate(620deg);
+    opacity: 0.85;
+  }
+}
+.confetti {
+  position: absolute;
+  top: -12px;
+  width: 7px;
+  height: 11px;
+  border-radius: 2px;
+  animation: confetti 2s linear forwards;
+}
+
+/* pengaturan "Visual Efek" mati */
+.fx-off *,
+.fx-off *::before,
+.fx-off *::after {
+  animation: none !important;
+}
+
+/* ---------- lembar cetak kartu ---------- */
+.print-root {
+  display: none;
+}
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 8mm;
+  }
+  html,
+  body {
+    height: auto;
+    overflow: visible;
+    background: #fff !important;
+  }
+  #root {
+    display: none !important;
+  }
+  .print-root {
+    display: block;
+    font-family: "Baloo 2", system-ui, sans-serif;
+    color: #2b1b0e;
+  }
+  .print-page {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 5mm;
+    height: 190mm;
+    break-after: page;
+    page-break-after: always;
+  }
+  .print-page:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+  .print-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4mm 3mm;
+    border: 0.9mm solid #2b1b0e;
+    border-radius: 4mm;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .print-brand {
+    font-size: 8pt;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: #a9673a;
+  }
+  .print-value {
+    font-family: "Luckiest Guy", "Baloo 2", sans-serif;
+    font-size: 54pt;
+    line-height: 1;
+  }
+  .print-kind {
+    font-size: 9pt;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+}
+
+/* ---------- logo: outline di bawah, gradien di atas ---------- */
+.logo-line {
+  position: relative;
+  display: block;
+  white-space: nowrap;
+}
+.logo-stroke {
+  position: absolute;
+  inset: 0;
+  color: #2b1b0e;
+  -webkit-text-stroke: 10px #2b1b0e;
+  text-shadow: 0 5px 0 rgba(43, 27, 14, 0.5);
+  pointer-events: none;
+}
+.logo-fill {
+  position: relative;
+  display: block;
+  color: transparent;
+  background-image: linear-gradient(#fff6d0 8%, #ffd54f 48%, #ff9f1c 96%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* ---------- level-complete teleport ---------- */
+.teleport-screen {
+  isolation: isolate;
+  color: #fff;
+  background: #102c4c;
+}
+.teleport-scenery {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 640px;
+  max-width: none;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.4s ease;
+}
+.teleport-destination {
+  opacity: 0;
+}
+.teleport--transit .teleport-destination,
+.teleport--arrive .teleport-destination,
+.teleport--settle .teleport-destination {
+  opacity: 1;
+}
+.teleport--transit .teleport-source,
+.teleport--arrive .teleport-source,
+.teleport--settle .teleport-source {
+  opacity: 0;
+}
+.teleport-shade {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(#081c41dc, #0c284665 56%, #101c3da3);
+  transition: opacity 0.65s ease;
+}
+.teleport-ground {
+  position: absolute;
+  z-index: 2;
+  inset: auto 0 0;
+  border-top: 4px solid #2b1b0e;
+  filter: brightness(0.65);
+  transition: filter 0.65s ease;
+}
+.teleport-heading {
+  position: absolute;
+  z-index: 5;
+  top: 31px;
+  right: 28px;
+  left: 28px;
+  text-align: center;
+  transition: opacity 0.4s ease;
+}
+.teleport-kicker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: #ffe292;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+.teleport-heading h1 {
+  margin-top: 5px;
+  font-size: 27px;
+  line-height: 1.2;
+  color: #f1fdff;
+}
+.teleport-heading p {
+  margin-top: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #d2efff;
+}
+.teleport-effects {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  pointer-events: none;
+}
+.teleport-portal {
+  position: absolute;
+  bottom: 40px;
+  left: 163px;
+  width: 154px;
+  height: 178px;
+  filter: drop-shadow(0 0 10px #77dcffb3);
+  transform-origin: center bottom;
+  animation: portal-open 0.7s cubic-bezier(0.2, 0.8, 0.35, 1) both;
+}
+.teleport-portal-dashes {
+  animation: portal-current 2s linear infinite;
+}
+.teleport-floor-ring {
+  position: absolute;
+  bottom: 46px;
+  left: 162px;
+  width: 156px;
+  height: 29px;
+  border: 3px solid #b7f9ff;
+  border-radius: 50%;
+  background: #69e3ff38;
+  box-shadow: 0 0 16px #6cddff91, inset 0 0 12px #9aeaff61;
+  animation: portal-open 0.85s ease both;
+}
+.teleport-beam {
+  position: absolute;
+  bottom: 58px;
+  left: 202px;
+  width: 76px;
+  height: 198px;
+  opacity: 0;
+  background: linear-gradient(0deg, #cbfaffdf, #7ceaff9c 55%, #a0eaff00);
+  clip-path: polygon(18% 0, 82% 0, 100% 100%, 0 100%);
+  transform: scaleY(0.05);
+  transform-origin: center bottom;
+}
+.teleport--depart .teleport-beam {
+  animation: portal-beam 0.65s ease-out both;
+}
+.teleport--transit .teleport-beam {
+  opacity: 0.9;
+  transform: scaleY(1.2);
+}
+.teleport--arrive .teleport-beam {
+  animation: portal-beam 0.75s ease-in reverse both;
+}
+.teleport-motes {
+  position: absolute;
+  bottom: 151px;
+  left: 240px;
+}
+.teleport-mote {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  opacity: 0;
+  border-radius: 1px;
+  box-shadow: 0 0 6px #c2efffc7;
+}
+.teleport--charge .teleport-mote,
+.teleport--depart .teleport-mote {
+  animation: portal-gather 1.05s ease-in var(--mote-delay) infinite;
+}
+.teleport--arrive .teleport-mote {
+  animation: portal-scatter 0.8s ease-out var(--mote-delay) both;
+}
+.teleport-dock {
+  position: absolute;
+  z-index: 4;
+  bottom: 55px;
+  left: 240px;
+  width: 82px;
+  transform: translateX(-50%);
+  transition: left 0.65s cubic-bezier(0.4, 0, 0.2, 1), width 0.65s ease;
+}
+.teleport-robot {
+  filter: drop-shadow(0 4px 0 #13204470);
+  transform-origin: center bottom;
+}
+.teleport--charge .teleport-robot {
+  animation: portal-hover 0.85s ease-out both;
+}
+.teleport--depart .teleport-robot {
+  animation: portal-depart 0.65s ease-in both;
+}
+.teleport--transit .teleport-robot {
+  opacity: 0;
+}
+.teleport--arrive .teleport-robot {
+  animation: portal-arrive 0.8s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+.teleport-route {
+  position: absolute;
+  z-index: 7;
+  right: 15px;
+  bottom: 18px;
+  left: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff4d5;
+  text-shadow: 0 1px 3px #2b1b0e;
+  transition: opacity 0.4s ease;
+}
+.teleport-route-line {
+  position: relative;
+  width: 54px;
+  height: 2px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #e2faff55;
+}
+.teleport-route-line i {
+  position: absolute;
+  inset: -1px auto -1px 0;
+  width: 15px;
+  background: #d6fdff;
+  animation: portal-travel 1.1s ease-in-out infinite;
+}
+.teleport-flash {
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(ellipse at 50% 60%, #f3ffff 5%, #a8f3ff 45%, #b3a6e900 85%);
+}
+.teleport--transit .teleport-flash {
+  animation: portal-flash 0.38s ease-in-out both;
+}
+.teleport-skip {
+  position: absolute;
+  z-index: 10;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 6px;
+  border: 1px solid #d8f2ff55;
+  border-radius: 6px;
+  background: #0a203d91;
+  color: #e7faff;
+  font-size: 10px;
+  font-weight: 700;
+}
+.teleport-skip:hover {
+  background: #163653;
+}
+.teleport-skip:focus-visible {
+  outline: 2px solid #acfbff;
+  outline-offset: 2px;
+}
+.teleport--settle .teleport-dock,
+.teleport--calm .teleport-dock {
+  left: 70px;
+  width: 46px;
+}
+.teleport--settle .teleport-effects,
+.teleport--settle .teleport-heading,
+.teleport--settle .teleport-route,
+.teleport--settle .teleport-shade {
+  opacity: 0;
+  transition: opacity 0.55s ease;
+}
+.teleport--arrive .teleport-ground,
+.teleport--settle .teleport-ground {
+  filter: brightness(1);
+}
+.teleport--calm .teleport-effects,
+.teleport--calm .teleport-flash {
+  display: none;
+}
+.teleport--calm .teleport-robot {
+  animation: none !important;
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes portal-open {
+  from { opacity: 0; transform: scale(0.35, 0.1); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes portal-current {
+  to { stroke-dashoffset: -110; }
+}
+@keyframes portal-beam {
+  from { opacity: 0; transform: scaleY(0.05); }
+  to { opacity: 0.9; transform: scaleY(1.2); }
+}
+@keyframes portal-gather {
+  0% { opacity: 0; transform: translate(var(--mote-x), var(--mote-y)) scale(0.5); }
+  35% { opacity: 1; }
+  100% { opacity: 0; transform: translate(0, 0) scale(0.2); }
+}
+@keyframes portal-scatter {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.2); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--mote-x), var(--mote-y)) scale(0.6); }
+}
+@keyframes portal-hover {
+  from { transform: translateY(0); }
+  to { transform: translateY(-8px); }
+}
+@keyframes portal-depart {
+  0% { opacity: 1; transform: translateY(-8px) scale(1); }
+  35% { opacity: 1; transform: translateY(-20px) scale(0.8, 1.15); filter: brightness(1.8) drop-shadow(0 0 8px #bdffff); }
+  100% { opacity: 0; transform: translateY(-100px) scale(0.04, 1.6); filter: brightness(2) blur(3px); }
+}
+@keyframes portal-arrive {
+  0% { opacity: 0; transform: translateY(-80px) scale(0.04, 1.6); filter: brightness(2) blur(3px); }
+  45% { opacity: 1; transform: translateY(-12px) scale(0.95, 1.06); filter: brightness(1.4) drop-shadow(0 0 8px #bdffff); }
+  80% { transform: translateY(1px) scale(1.04, 0.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: drop-shadow(0 4px 0 #13204470); }
+}
+@keyframes portal-travel {
+  from { transform: translateX(-16px); }
+  to { transform: translateX(55px); }
+}
+@keyframes portal-flash {
+  0%, 100% { opacity: 0; }
+  45% { opacity: 0.78; }
+}
+
+/* ---------- animasi kerangka robot pixel-art ---------- */
+.robot-rig {
+  overflow: visible;
+  image-rendering: pixelated;
+}
+.robot-part,
+.robot-body-root {
+  transform-box: view-box;
+  transition: transform 0.12s ease-out;
+}
+.robot-head {
+  transform-origin: 27px 22px;
+}
+.robot-torso {
+  transform-origin: 27px 33px;
+}
+.robot-front-arm {
+  transform-origin: 16px 26px;
+}
+/* Rotasi bertumpu di bahu supaya lengan tetap menyatu dengan badan. */
+.robot-back-arm {
+  transform-origin: 37px 34px;
+}
+.robot-front-leg {
+  transform-origin: 21px 40px;
+}
+.robot-back-leg {
+  transform-origin: 32px 40px;
+}
+
+/* Idle: bernapas halus + tangan siap */
+.robot-act-idle .robot-head {
+  animation: r-idle-head 2.1s ease-in-out infinite;
+}
+.robot-act-idle .robot-torso {
+  animation: r-idle-torso 2.1s ease-in-out infinite;
+}
+.robot-act-idle .robot-front-arm {
+  animation: r-idle-farm 2.1s ease-in-out infinite;
+}
+.robot-act-idle .robot-back-arm {
+  animation: r-idle-barm 2.1s ease-in-out infinite;
+}
+
+/* Walk & Run: ayunan kaki dan tangan berlawanan + bobbing badan */
+.robot-act-walk .robot-body-root,
+.robot-act-run .robot-body-root {
+  animation: r-walk-bob var(--robot-cycle, 0.36s) ease-in-out infinite;
+}
+.robot-act-walk .robot-front-leg,
+.robot-act-run .robot-front-leg {
+  animation: r-walk-fleg var(--robot-cycle, 0.36s) ease-in-out infinite;
+}
+.robot-act-walk .robot-back-leg,
+.robot-act-run .robot-back-leg {
+  animation: r-walk-bleg var(--robot-cycle, 0.36s) ease-in-out infinite;
+}
+.robot-act-walk .robot-front-arm,
+.robot-act-run .robot-front-arm {
+  animation: r-walk-farm var(--robot-cycle, 0.36s) ease-in-out infinite;
+}
+.robot-act-walk .robot-back-arm,
+.robot-act-run .robot-back-arm {
+  animation: r-walk-barm var(--robot-cycle, 0.36s) ease-in-out infinite;
+}
+.robot-act-walk .robot-head,
+.robot-act-run .robot-head {
+  animation: r-walk-head var(--robot-cycle, 0.36s) ease-in-out infinite;
+}
+
+/* Jump & Double Jump */
+.robot-act-jump .robot-body-root {
+  transform: translateY(-2px) rotate(-4deg);
+}
+.robot-act-jump .robot-front-leg {
+  transform: translate(-1px, -3px) rotate(18deg);
+}
+.robot-act-jump .robot-back-leg {
+  transform: translate(2px, -2px) rotate(-16deg);
+}
+.robot-act-jump .robot-front-arm {
+  transform: rotate(-22deg) translateY(-1px);
+}
+.robot-act-jump .robot-back-arm {
+  transform: rotate(-16deg);
+}
+.robot-act-doubleJump .robot-body-root {
+  animation: r-djump-spin 0.38s cubic-bezier(0.25, 0.9, 0.35, 1) both;
+  transform-origin: 24px 32px;
+}
+
+/* Fall & Land */
+.robot-act-fall .robot-body-root {
+  transform: translateY(1px) rotate(3deg);
+}
+.robot-act-fall .robot-front-leg {
+  transform: translateY(-1px) rotate(-10deg);
+}
+.robot-act-fall .robot-back-leg {
+  transform: translateY(-2px) rotate(12deg);
+}
+.robot-act-fall .robot-front-arm {
+  transform: rotate(18deg) translateY(-2px);
+}
+.robot-act-fall .robot-back-arm {
+  transform: rotate(-20deg);
+}
+.robot-act-land .robot-body-root,
+.robot-act-crouch .robot-body-root {
+  transform: translateY(3px) scale(1.06, 0.92);
+  transform-origin: 24px 55px;
+}
+.robot-act-crouch .robot-head {
+  transform: translateY(2px);
+}
+.robot-act-crouch .robot-front-arm {
+  transform: rotate(14deg) translateY(1px);
+}
+
+/* Dash / Meluncur cepat */
+.robot-act-dash .robot-body-root {
+  transform: translateX(3px) rotate(11deg) scale(1.04, 0.96);
+  transform-origin: 24px 40px;
+}
+.robot-act-dash .robot-front-leg {
+  transform: rotate(24deg) translate(-2px, -2px);
+}
+.robot-act-dash .robot-back-leg {
+  transform: rotate(-18deg) translate(2px, -1px);
+}
+.robot-act-dash .robot-back-arm {
+  transform: rotate(18deg);
+}
+.robot-act-dash .robot-front-arm {
+  transform: rotate(28deg) translate(-1px, 0);
+}
+
+/* Attack / Wave / Victory */
+.robot-act-attack .robot-back-arm,
+.robot-act-victory .robot-back-arm {
+  animation: r-punch 0.38s ease-in-out infinite alternate;
+}
+.robot-act-victory .robot-body-root {
+  animation: r-victory-hop 0.55s ease-in-out infinite;
+}
+.robot-act-wave .robot-back-arm {
+  animation: r-wave 0.32s ease-in-out infinite alternate;
+}
+
+.robot-jet {
+  animation: r-jet-flicker 0.14s steps(2) infinite;
+  transform-origin: 24px 53px;
+  transform-box: view-box;
+}
+.robot-dust {
+  animation: r-dust-puff 0.35s ease-out infinite;
+  transform-origin: 8px 53px;
+  transform-box: view-box;
+}
+.robot-spark {
+  animation: r-spark-pop 0.28s steps(2) infinite;
+}
+
+@keyframes r-idle-head {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(1px); }
+}
+@keyframes r-idle-torso {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(0.7px); }
+}
+@keyframes r-idle-farm {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(4deg) translateY(0.8px); }
+}
+@keyframes r-idle-barm {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-6deg); }
+}
+@keyframes r-walk-bob {
+  0%, 50%, 100% { transform: translateY(0) rotate(2deg); }
+  25%, 75% { transform: translateY(-2.4px) rotate(4deg); }
+}
+@keyframes r-walk-fleg {
+  0%, 100% { transform: rotate(-24deg) translate(2px, -1px); }
+  50% { transform: rotate(24deg) translate(-2px, -1px); }
+}
+@keyframes r-walk-bleg {
+  0%, 100% { transform: rotate(24deg) translate(-2px, -1px); }
+  50% { transform: rotate(-24deg) translate(2px, -1px); }
+}
+@keyframes r-walk-farm {
+  0%, 100% { transform: rotate(22deg) translate(-1px, 0); }
+  50% { transform: rotate(-22deg) translate(2px, -1px); }
+}
+@keyframes r-walk-barm {
+  0%, 100% { transform: rotate(-18deg); }
+  50% { transform: rotate(20deg); }
+}
+@keyframes r-walk-head {
+  0%, 50%, 100% { transform: translateY(0); }
+  25%, 75% { transform: translateY(0.8px); }
+}
+@keyframes r-djump-spin {
+  0% { transform: translateY(0) scale(0.92, 1.08); }
+  50% { transform: translateY(-6px) rotate(-14deg) scale(1.06); }
+  100% { transform: translateY(-2px) rotate(-4deg) scale(1); }
+}
+@keyframes r-punch {
+  from { transform: rotate(-14deg); }
+  to { transform: rotate(12deg); }
+}
+@keyframes r-wave {
+  from { transform: rotate(-22deg); }
+  to { transform: rotate(10deg); }
+}
+@keyframes r-victory-hop {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+@keyframes r-jet-flicker {
+  0% { transform: scaleY(0.85); opacity: 0.85; }
+  100% { transform: scaleY(1.25); opacity: 1; }
+}
+@keyframes r-dust-puff {
+  0% { transform: translate(0, 0) scale(0.6); opacity: 0.9; }
+  100% { transform: translate(-5px, -3px) scale(1.25); opacity: 0; }
+}
+@keyframes r-spark-pop {
+  0% { opacity: 1; transform: scale(0.9); }
+  100% { opacity: 0.55; transform: scale(1.15); }
+}
+
+/* Robot guards and attacks */
+.dog-sprite {
+  image-rendering: pixelated;
+  filter: drop-shadow(0 3px 0 #20162c80);
+}
+.dog-patrol {
+  animation: dog-patrol 0.38s ease-in-out infinite;
+}
+.dog-hit {
+  filter: brightness(1.8) drop-shadow(0 0 5px #fff2a0);
+}
+.guarded-treasure {
+  filter: saturate(0.55) brightness(0.78);
+}
+.robot-invulnerable {
+  animation: robot-hit-blink 0.2s steps(2, end) infinite;
+}
+.robot-act-kick .robot-front-leg {
+  transform: rotate(-62deg) translate(3px, -1px);
+}
+.robot-act-kick .robot-back-leg {
+  transform: rotate(10deg);
+}
+.robot-act-kick .robot-body-root {
+  transform: rotate(-8deg);
+  transform-origin: 27px 50px;
+}
+.robot-act-shoot .robot-back-arm {
+  transform: rotate(20deg);
+}
+.combat-spark {
+  position: absolute;
+  top: 35%;
+  left: 90%;
+  color: #fff8a5;
+  filter: drop-shadow(0 0 4px #ffbd31);
+  animation: combat-spark 0.3s ease-out both;
+}
+.game-shot {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  pointer-events: none;
+}
+.game-shot-laser {
+  width: 26px;
+  height: 5px;
+  border: 1px solid #efffff;
+  border-radius: 4px;
+  background: #72f7ff;
+  box-shadow: 0 0 5px #23dcff, 0 0 10px #1377ff;
+}
+.game-shot-plasma {
+  width: 15px;
+  height: 15px;
+  border: 2px solid #f6d5ff;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff, #e276ff 45%, #792bda 80%);
+  box-shadow: 0 0 7px #df69ff, 0 0 14px #833cff;
+}
+.weapon-emblem {
+  display: grid;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 3px solid #2b1b0e;
+  border-radius: 11px;
+  color: white;
+}
+.weapon-emblem-laser {
+  background: linear-gradient(#5feaff, #058dc5);
+}
+.weapon-emblem-plasma {
+  background: linear-gradient(#d68bff, #702dcc);
+}
+@keyframes dog-patrol {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -2px; }
+}
+@keyframes robot-hit-blink {
+  50% { opacity: 0.38; }
+}
+@keyframes combat-spark {
+  from { opacity: 1; scale: 0.65; }
+  to { opacity: 0; scale: 1.5; }
+}
